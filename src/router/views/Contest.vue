@@ -1,0 +1,120 @@
+<template>
+   <v-container class="pa-12" flat>
+    <v-row>
+      <v-col cols="2">
+        <side-bar> </side-bar>
+      </v-col>
+      <v-col cols="6">
+        
+        <v-card height="853" class="problemCSS">
+              <h1>{{nameContest}}</h1>
+              <v-data-table
+                dense
+                :headers="problemHeaders"
+                :items="problems"
+                item-key="id"
+                class="elevation-1"
+                @click:row = "solveProblem"
+                height="800"
+              >
+                 
+              </v-data-table>
+            </v-card>
+      </v-col>
+      <v-col cols="3">
+        <v-card height="853" class="problemCSS">
+          <v-select v-model="language" :items="languages" outlined>
+          </v-select>
+          <h1>Submit</h1>
+          
+          <v-card height="50" width="61%" class = "submitionCSS">
+              {{submition}}
+          </v-card>
+          <v-btn dark height="50" width="38%" @click="chooseFile">
+              Choose file
+          </v-btn>
+          
+          
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>     
+</template>
+<script>
+import SideBar from '@/components/SideBar.vue';
+import axios from 'axios';
+export default {
+  name: "Contest",
+  components: {
+      SideBar,
+  },
+  data() {
+    return {
+      nameContest: "Contest 1",
+      problemHeaders: [
+        {
+          text: "Id",
+          align: "start",
+          sortable: false,
+          value: "id",
+        },
+        {
+          text: "Name",
+          value: "title",
+        },
+        {
+          text: "Points",
+          value: "points",
+        },
+      ],
+      problems: [
+        { id: 1, title: "Find x", points: 100 },
+        { id: 2, title: "Find x", points: 100 },
+        { id: 3, title: "Find x", points: 100 },
+        { id: 4, title: "Find x", points: 100 },
+      ],
+      language: "C++",
+      languages: ["C++", "Java", "Pascal"],
+    };
+  },
+  mounted() {
+    this.loadContest();
+  },
+  methods: {
+    chooseFile() {
+      console.log("choose File");
+    },
+    solveProblem(){
+      this.$router.push({path: '/problem'});
+    },
+    loadContest(){
+      axios.get();
+    }
+  },
+};
+</script>
+<style scoped>
+.problemCSS {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  overflow-y: scroll;
+}
+.problemCSS::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.problemCSS {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+h1 {
+  text-align: center;
+}
+.submitionCSS {
+    border: 1px solid black;
+    float: left;
+    text-align:center;
+}
+</style>
