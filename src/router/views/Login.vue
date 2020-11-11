@@ -4,14 +4,14 @@
       <v-form @submit.prevent="authenticate">
         <h1 class="titleCSS">VBCODE.</h1>
         <v-text-field
-          v-model="username"
+          v-model="form.email"
           outlined
           prepend-inner-icon="mdi-account"
           label="User name"
         >
         </v-text-field>
         <v-text-field
-          v-model="password"
+          v-model="form.password"
           type="password"
           outlined
           prepend-inner-icon="mdi-key"
@@ -25,12 +25,15 @@
 </template>
 <script>
 import {login} from '../../helpers/auth';
+import axios from "axios";
 export default {
   name: "Login",
   data() {
     return {
-      username: "",
-      password: "",
+      form:{
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
@@ -39,7 +42,9 @@ export default {
       this.$store.dispatch("LOGIN");
       login(this.$data.form)
         .then(res =>{
+          console.log(res);
           this.$store.commit("LOGIN_SUCCESS", res);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${res.access_token}`;
           this.$router.push({path: '/home'});
         })
       

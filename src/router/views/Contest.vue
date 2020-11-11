@@ -62,25 +62,22 @@ export default {
         },
         {
           text: "Name",
-          value: "title",
+          value: "name",
         },
         {
           text: "Points",
-          value: "points",
+          value: "point",
         },
       ],
       problems: [
-        { id: 1, title: "Find x", points: 100 },
-        { id: 2, title: "Find x", points: 100 },
-        { id: 3, title: "Find x", points: 100 },
-        { id: 4, title: "Find x", points: 100 },
       ],
       language: "C++",
       languages: ["C++", "Java", "Pascal"],
     };
   },
   mounted() {
-    this.loadContest();
+    this.loadData();
+    this.loadDataProblems();
   },
   methods: {
     submit() {
@@ -89,12 +86,23 @@ export default {
     solveProblem(value){
       this.$router.push({path: '/problem/' + value.id});
     },
-    loadContest(){
-      axios.get(api.getContestById + this.$router.params.id).then(r =>{
-        this.nameContest = r.data.nameContest,
-        this.problems = r.data.problems;
+    loadDataProblems(){
+      console.log('load data problems');
+      axios.get(api.getAllProblem).then(res => res.data).then(r =>{
+        console.log(r);
+        this.problems = r.data;
       });
-    }
+      
+    },
+    loadData(){
+      console.log(1);
+      axios.get(api.getContestById + this.$route.params.id).then(res => res.data).then(r =>{
+        this.nameContest = r.data.name,
+        console.log(r);
+      });
+      
+    },
+    
   },
 };
 </script>
