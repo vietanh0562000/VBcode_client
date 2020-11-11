@@ -27,12 +27,13 @@
           </v-select>
           <h1>Submit</h1>
           
-          <v-card height="50" width="61%" class = "submitionCSS">
-              {{submition}}
-          </v-card>
-          <v-btn dark height="50" width="38%" @click="chooseFile">
-              Choose file
+          <v-row>
+          <v-file-input width="61%" >
+          </v-file-input>
+          <v-btn dark height="50" width="38%" @click="submit">
+              Submit
           </v-btn>
+          </v-row>
           
           
         </v-card>
@@ -43,6 +44,7 @@
 <script>
 import SideBar from '@/components/SideBar.vue';
 import axios from 'axios';
+import api from './api';
 export default {
   name: "Contest",
   components: {
@@ -81,14 +83,17 @@ export default {
     this.loadContest();
   },
   methods: {
-    chooseFile() {
+    submit() {
       console.log("choose File");
     },
-    solveProblem(){
-      this.$router.push({path: '/problem'});
+    solveProblem(value){
+      this.$router.push({path: '/problem/' + value.id});
     },
     loadContest(){
-      axios.get();
+      axios.get(api.getContestById + this.$router.params.id).then(r =>{
+        this.nameContest = r.data.nameContest,
+        this.problems = r.data.problems;
+      });
     }
   },
 };

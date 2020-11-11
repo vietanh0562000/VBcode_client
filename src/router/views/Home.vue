@@ -125,11 +125,12 @@ export default {
     chooseFile() {
       console.log("choose File");
     },
-    solveProblem(){
-      this.$router.push({path: '/problem'});
+    solveProblem(value){
+     
+      this.$router.push({path: '/problem/' + value.id});
     },
-    enterContest(){
-      this.$router.push({ path: '/contest'});
+    enterContest(value){
+      this.$router.push({ path: '/contest/' + value.id});
     }
   },
 };

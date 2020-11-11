@@ -8,7 +8,7 @@
           :key="item.icon"
           link
           class="listCSS"
-          @onClick = "goTo(item.path)"
+          @click = "$router.push({path: item.path})"
         >
           <v-list-item-icon class="listIconCSS">
             <v-icon x-large>{{ item.icon }}</v-icon>
@@ -25,16 +25,14 @@ export default {
     return {
       items: [
         { icon: "mdi-home" , path: '/home'},
-        { icon: "mdi-book-open", path: '/problem' },
-        { icon: "mdi-account", path: '/' },
+        { icon: "mdi-book-open", path: '/contest/1' },
+        { icon: "mdi-account", path: '/user/1' },
         { icon: "mdi-cog", path: '/' },
       ],
     };
   },
   methods: {
-    goTo(link){
-      this.$router.push({path: link});
-    }  
+    
   }
 };
 </script>

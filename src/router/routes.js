@@ -6,7 +6,7 @@ export default[
         
         },
         {
-            path: "/problem",
+            path: "/problem/:id",
             name: "Problem",
             component: () => import('./views/Problem.vue'),
         },
@@ -21,8 +21,13 @@ export default[
             component: () => import('./views/Signup.vue'),
         },
         {
-            path: "/contest",
+            path: "/contest/:id",
             name: "Contest",
             component: () => import('./views/Contest.vue'),
+        },
+        {
+            path: "/user/:id",
+            name: "User",
+            component: () => import('./views/User.vue'),
         }
 ]; 

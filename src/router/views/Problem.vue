@@ -19,11 +19,10 @@
         <v-card height="853" class="problemCSS">
           <h1>Submit</h1>
           <v-row>
-          <v-card height="50" width="61%" class = "submitionCSS">
-              {{submition}}
-          </v-card>
-          <v-btn dark height="50" width="38%" @click="chooseFile">
-              Choose file
+          <v-file-input width="61%" >
+          </v-file-input>
+          <v-btn dark height="50" width="38%" @click="submit">
+              Submit
           </v-btn>
           </v-row>
           <br>
@@ -54,6 +53,7 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 import axios from 'axios';
+import api from './api';
 export default {
   name: "HomeLayout",
   components: {
@@ -97,14 +97,20 @@ For each test case, in the first line, print the minimum possible number left on
     };
   },
   mounted() {
-    this.loadProblem();
+    this.loadData();
   },
   methods: {
-    chooseFile(){
+    submit(){
         console.log('choose File');
     },
-    loadProblem(){
-      axios.get();
+    loadData(){
+      axios.get(api.getProblemById + this.$route.params.id).then(r =>{
+        this.title = r.data.title;
+        this.task = r.data.task;
+        this.input = r.data.input;
+        this.output = r.data.output;
+        this.histories = r.data.histories;
+      });
     }
   },
 

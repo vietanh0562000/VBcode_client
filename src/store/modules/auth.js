@@ -48,6 +48,7 @@ export default {
     actions: {
         LOGIN: (context) => {
             context.commit('LOGIN');
+            console.log('Log in');
         },
     }
 }
