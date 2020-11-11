@@ -80,6 +80,11 @@ export default {
       }
     },
     submit(){
+        let formData = new FormData();
+        formData.append('file', this.file, this.file.name);
+        axios.post(api.submissions, formData).then(res =>{
+          console.log('success' + res);
+        })
         if (this.file != null){
           this.histories.push({id: this.histories.length+1, score: 100});
           this.file = null;

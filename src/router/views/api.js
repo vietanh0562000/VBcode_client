@@ -7,5 +7,5 @@ export default {
     getUserById: baseApi + 'users/',
     getAllUser: baseApi + 'users/',
     getAllProblemByIdContest: baseApi + 'contests/:id/problems',
-    submissions: baseApi + '/submissions'
+    submissions: baseApi + 'submissions'
 }
