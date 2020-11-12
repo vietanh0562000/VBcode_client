@@ -2,7 +2,7 @@ import axios from 'axios';
 export function login(credential) {
     console.log(credential);
     return new Promise((res, rej) => {
-        axios.post('http://127.0.0.1:8000/api/auth/login', credential)
+        axios.post('/api/auth/login', credential)
             .then(result => {
                 res(result.data);
             })
