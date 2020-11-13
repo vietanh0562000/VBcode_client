@@ -33,21 +33,33 @@
           <v-col cols="7">
             <v-card height="717" class="welcome">
               <h1>Problems</h1>
+              <v-select
+                v-model="selectedCategory"
+                :items= "categories"
+                label="Search By Category"
+              >
+              </v-select>
               <v-data-table
                 dense
                 :headers="problemHeaders"
                 :items="problems"
                 item-key="id"
                 class="elevation-1"
-                @click:row = "solveProblem"
-                height="570"
+                hide-default-footer
+                @click:row="solveProblem"
+                height="70%"
               >
-                 
               </v-data-table>
+              <v-pagination
+                v-model="pagination.current"
+                :length="pagination.total"
+                :total-visible="7"
+                @input="onPageChange"
+              ></v-pagination>
             </v-card>
           </v-col>
           <v-col cols="4">
-            <v-card height="717" class="welcome"> 
+            <v-card height="717" class="welcome">
               <h1>Contests</h1>
               <v-data-table
                 dense
@@ -55,10 +67,9 @@
                 :items="constests"
                 item-key="id"
                 class="elevation-1"
-                @click:row = "enterContest"
-                height="570"
+                @click:row="enterContest"
+                height="50%"
               >
-                 
               </v-data-table>
             </v-card>
           </v-col>
@@ -69,6 +80,8 @@
 </template>
 <script>
 import SideBar from "@/components/SideBar.vue";
+import axios from 'axios';
+import api from './api';
 export default {
   name: "HomeLayout",
   components: {
@@ -79,6 +92,9 @@ export default {
       username: "VanhDV",
       solvedProblem: 5,
       joinedContest: 10,
+      selectedCategory: null,
+      categories:[],
+      currCate:'',
       problemHeaders: [
         {
           text: "Id",
@@ -95,12 +111,7 @@ export default {
           value: "points",
         },
       ],
-      problems: [
-        { id: 1, title: "Find x", points: 100 },
-        { id: 2, title: "Find x", points: 100 },
-        { id: 3, title: "Find x", points: 100 },
-        { id: 4, title: "Find x", points: 100 },
-      ],
+      problems: [],
       contestHeaders: [
         {
           text: "Id",
@@ -113,25 +124,38 @@ export default {
           value: "title",
         },
       ],
-      constests: [
-        { id: 1, title: "Find x"},
-        { id: 2, title: "Find x"},
-        { id: 3, title: "Find x"},
-        { id: 4, title: "Find x"},
-      ],
+      constests: [],
+      pagination: {
+        current: 1,
+        total: 10,
+      },
     };
   },
   methods: {
     chooseFile() {
       console.log("choose File");
     },
-    solveProblem(value){
-     
-      this.$router.push({path: '/problem/' + value.id});
+    solveProblem(value) {
+      this.$router.push({ path: "/problem/" + value.id });
     },
-    enterContest(value){
-      this.$router.push({ path: '/contest/' + value.id});
-    }
+    enterContest(value) {
+      this.$router.push({ path: "/contest/" + value.id });
+    },
+    getData(){
+      axios.get(api.getAllProblem,this.pagination.current,this.currCate).then(res =>{
+        this.problems = res.data.data;
+        this.pagination.current = res.data.current_page;
+        this.pagination.total = res.data.last_page;
+        
+      });
+     
+    },
+    onPageChange(){
+      this.getData();
+    },
+  },
+  mounted() {
+    this.getData();
   },
 };
 </script>
