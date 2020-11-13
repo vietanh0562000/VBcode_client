@@ -1,7 +1,7 @@
 var baseApi = '/api/';
 export default {
     getProblemById: baseApi + 'problems/',
-    getAllProblem: baseApi  + 'problems?page=',
+    getAllProblem: baseApi  + 'problems?page=:page?&category=:cate',
     getContestById: baseApi + 'contests/',
     getAllContest: baseApi + 'contests/',
     getUserById: baseApi + 'users/',

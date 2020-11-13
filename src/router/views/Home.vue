@@ -94,7 +94,6 @@ export default {
       joinedContest: 10,
       selectedCategory: null,
       categories:[],
-      currCate:'',
       problemHeaders: [
         {
           text: "Id",
@@ -142,13 +141,17 @@ export default {
       this.$router.push({ path: "/contest/" + value.id });
     },
     getData(){
-      axios.get(api.getAllProblem,this.pagination.current,this.currCate).then(res =>{
-        this.problems = res.data.data;
-        this.pagination.current = res.data.current_page;
-        this.pagination.total = res.data.last_page;
-        
+      let page = this.pagination.current;
+      let category = this.selectedCategory;
+      axios.get(api.getAllProblem,{params:{page,category}}).then(res =>{
+        // this.problems = res.data.data;
+        // this.pagination.current = res.data.current_page;
+        // this.pagination.total = res.data.last_page;
+        console.log(res);
       });
-     
+      // axios.get(api.getAllCategories).then(res =>{
+      //   this.categories = res.data;
+      // });
     },
     onPageChange(){
       this.getData();
