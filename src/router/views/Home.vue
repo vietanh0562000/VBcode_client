@@ -12,31 +12,23 @@
               <p>It's good to see you again.</p>
             </v-card>
           </v-col>
-          <v-col cols="2" class="achivement">
+          <v-col cols="4" class="achivement">
             <v-card height="100" class="welcome">
-              <h1>{{ solvedProblem }}</h1>
-              <p>
-                Problems<span><br /></span> completed
-              </p>
+              <h1 class = "totalPoint">{{ totalPoints }}</h1>
+              <h3>Points</h3>
             </v-card>
           </v-col>
-          <v-col cols="2" class="achivement">
-            <v-card height="100" class="welcome">
-              <h1>{{ joinedContest }}</h1>
-              <p>
-                Contests<span><br /></span> joined
-              </p>
-            </v-card>
-          </v-col>
+        
         </v-row>
         <v-row>
           <v-col cols="7">
             <v-card height="717" class="welcome">
-              <h1>Problems</h1>
+              <h1 class = "floatLeft margin10px">Problems</h1>
               <v-select
                 v-model="selectedCategory"
                 :items= "categories"
                 label="Search By Category"
+                
               >
               </v-select>
               <v-data-table
@@ -60,7 +52,7 @@
           </v-col>
           <v-col cols="4">
             <v-card height="717" class="welcome">
-              <h1>Contests</h1>
+              <h1 class = "margin10px">Contests</h1>
               <v-data-table
                 dense
                 :headers="contestHeaders"
@@ -68,9 +60,16 @@
                 item-key="id"
                 class="elevation-1"
                 @click:row="enterContest"
-                height="50%"
+                height="70%"
+                hide-default-footer
               >
               </v-data-table>
+              <v-pagination
+                v-model="contestPagi.current"
+                :length="contestPagi.total"
+                :total-visible="7"
+                @input="onPageChange"
+              ></v-pagination>
             </v-card>
           </v-col>
         </v-row>
@@ -90,8 +89,7 @@ export default {
   data() {
     return {
       username: "VanhDV",
-      solvedProblem: 5,
-      joinedContest: 10,
+      totalPoints: 50,
       selectedCategory: null,
       categories:[],
       problemHeaders: [
@@ -128,6 +126,10 @@ export default {
         current: 1,
         total: 10,
       },
+      contestPagi:{
+        current: 1,
+        total: 10,
+      }
     };
   },
   methods: {
@@ -143,15 +145,22 @@ export default {
     getData(){
       let page = this.pagination.current;
       let category = this.selectedCategory;
+      let contestPage = this.contestPagi.current;
       axios.get(api.getAllProblem,{params:{page,category}}).then(res =>{
-        // this.problems = res.data.data;
-        // this.pagination.current = res.data.current_page;
-        // this.pagination.total = res.data.last_page;
+        this.problems = res.data.data;
+        this.pagination.current = res.data.current_page;
+        this.pagination.total = res.data.last_page;
         console.log(res);
       });
-      // axios.get(api.getAllCategories).then(res =>{
-      //   this.categories = res.data;
-      // });
+      axios.get(api.getAllCategories).then(res =>{
+        this.categories = res.data;
+      });
+      axios.get(api.getAllContest, {params: {contestPage}}).then(res =>{
+        this.constests = res.data.data;
+        this.contestPagi.current = res.data.current_page;
+        this.contestPagi.total = res.data.last_page;
+        console.log(res);
+      })
     },
     onPageChange(){
       this.getData();
@@ -168,19 +177,28 @@ export default {
   border: 20px;
   padding: 15px;
 }
+
 .colCSS {
   padding: 0px;
 }
-.achivement {
-}
+
 .achivement h1 {
   float: left;
   font-size: 64px;
   position: relative;
   top: -15%;
 }
-.achivement p {
+.achivement h3 {
   position: relative;
-  top: 15%;
+  top: 40%;
+}
+.floatLeft{
+  float: left;
+}
+.margin10px{
+  margin: 10px;
+}
+.margin0px{
+  margin: 0px;
 }
 </style>

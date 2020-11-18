@@ -29,5 +29,10 @@ export default[
             path: "/user/:id",
             name: "User",
             component: () => import('./views/User.vue'),
+        },
+        {
+            path: "/rank",
+            name: "Rank",
+            component: () => import('./views/Rank.vue'),
         }
 ]; 

@@ -25,7 +25,7 @@ export default {
     return {
       items: [
         { icon: "mdi-home" , path: '/home'},
-        { icon: "mdi-book-open", path: '/contest/1' },
+        { icon: "mdi-book-open", path: '/rank' },
         { icon: "mdi-account", path: '/user/1' },
         { icon: "mdi-cog", path: '/' },
       ],

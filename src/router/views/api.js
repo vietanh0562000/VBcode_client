@@ -8,5 +8,6 @@ export default {
     getAllUser: baseApi + 'users/',
     getAllProblemByIdContest: baseApi + 'contests/:id/problems',
     submissions: baseApi + 'submissions',
-    getAllCategories: baseApi + 'categories'
+    getAllCategories: baseApi + 'categories',
+    getRank: baseApi + 'rank',
 }
