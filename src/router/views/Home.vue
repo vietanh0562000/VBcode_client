@@ -28,7 +28,7 @@
                 v-model="selectedCategory"
                 :items= "categories"
                 label="Search By Category"
-                
+                @input = "getData"
               >
               </v-select>
               <v-data-table
@@ -91,7 +91,9 @@ export default {
       username: "VanhDV",
       totalPoints: 50,
       selectedCategory: null,
-      categories:[],
+      categories:[
+        'All',
+      ],
       problemHeaders: [
         {
           text: "Id",
@@ -101,11 +103,11 @@ export default {
         },
         {
           text: "Name",
-          value: "title",
+          value: "name",
         },
         {
           text: "Points",
-          value: "points",
+          value: "point",
         },
       ],
       problems: [],
@@ -118,7 +120,7 @@ export default {
         },
         {
           text: "Name",
-          value: "title",
+          value: "name",
         },
       ],
       constests: [],
@@ -146,20 +148,27 @@ export default {
       let page = this.pagination.current;
       let category = this.selectedCategory;
       let contestPage = this.contestPagi.current;
+      if (category == 'All') category = '';
+
       axios.get(api.getAllProblem,{params:{page,category}}).then(res =>{
-        this.problems = res.data.data;
-        this.pagination.current = res.data.current_page;
-        this.pagination.total = res.data.last_page;
         console.log(res);
+        this.problems = res.data.data;
+        this.pagination.current = res.data.meta.current_page;
+        this.pagination.total = res.data.meta.last_page;
+        
       });
       axios.get(api.getAllCategories).then(res =>{
-        this.categories = res.data;
+        //console.log(res);
+        let categories = res.data.data;
+        categories.forEach(element => {
+          this.categories.push(element.category);
+        });
       });
       axios.get(api.getAllContest, {params: {contestPage}}).then(res =>{
         this.constests = res.data.data;
-        this.contestPagi.current = res.data.current_page;
-        this.contestPagi.total = res.data.last_page;
-        console.log(res);
+        this.contestPagi.current = res.data.meta.current_page;
+        this.contestPagi.total = res.data.meta.last_page;
+        //console.log(res);
       })
     },
     onPageChange(){

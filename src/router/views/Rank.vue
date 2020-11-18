@@ -5,6 +5,7 @@
         <side-bar></side-bar>
       </v-col>
       <v-col cols="10">
+        <v-card height="853px">
         <v-data-table
           dense
           :headers="rankHeaders"
@@ -12,6 +13,7 @@
           item-key="id"
           class="elevation-1"
           hide-default-footer
+          height="800px"
         >
         </v-data-table>
         <v-pagination
@@ -21,6 +23,7 @@
           @input="onPageChange"
         >
         </v-pagination>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
