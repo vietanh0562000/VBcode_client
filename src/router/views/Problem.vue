@@ -100,6 +100,11 @@ export default {
           this.task = r.data.question;
           this.id = this.$route.params.id;
         });
+      axios.get(api.getHistory, this.$route.params.id).then(res =>{
+        res.data.forEach(element => {
+           this.histories.push({id: element.id, score: element.point}); 
+        });
+      })  
     },
   },
 };

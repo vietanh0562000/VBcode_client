@@ -45,6 +45,7 @@ export default {
           console.log(res);
           this.$store.commit("LOGIN_SUCCESS", res);
           axios.defaults.headers.common["Authorization"] = `Bearer ${res.access_token}`;
+          
           this.$router.push({path: '/home'});
         })
       

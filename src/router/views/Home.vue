@@ -88,7 +88,7 @@ export default {
   },
   data() {
     return {
-      username: "VanhDV",
+      username: "VAnh",
       totalPoints: 50,
       selectedCategory: null,
       categories:[
@@ -169,7 +169,8 @@ export default {
         this.contestPagi.current = res.data.meta.current_page;
         this.contestPagi.total = res.data.meta.last_page;
         //console.log(res);
-      })
+      });
+    
     },
     onPageChange(){
       this.getData();
@@ -177,7 +178,7 @@ export default {
   },
   mounted() {
     this.getData();
-  },
+  }
 };
 </script>
 <style scoped>

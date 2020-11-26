@@ -10,5 +10,6 @@ export default {
     submissions: baseApi + 'submissions',
     getSubmission: baseApi + 'submissions/',
     getAllCategories: baseApi + 'categories',
-    getRank: baseApi + 'rank',
+    getRank: baseApi + 'leaderboard',
+    getHistory: baseApi + 'problems/:id/history',
 }

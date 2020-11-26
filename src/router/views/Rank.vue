@@ -50,7 +50,7 @@ export default {
               },
               {
                 text: "Tổng điểm",
-                value: "totalPoints"
+                value: "cumulative_score"
               }
           ],
           users:[],
@@ -64,7 +64,9 @@ export default {
       loadData(){
           let page = this.pagination.current;
           Axios.get(api.getRank, {params:{page}}).then(res =>{
-              this.users = res.data;
+              this.users = res.data.data;
+              this.pagination.current = res.data.meta.current_page;
+              this.pagination.total = res.data.meta.last_page;
           })
       },
       onPageChange(){

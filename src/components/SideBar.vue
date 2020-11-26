@@ -5,14 +5,15 @@
       <v-list dense rounded>
         <v-list-item
           v-for="item in items"
-          :key="item.icon"
+          :key="item.title"
           link
           class="listCSS"
           @click = "$router.push({path: item.path})"
         >
-          <v-list-item-icon class="listIconCSS">
+          <v-list-item-title>
             <v-icon x-large>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          </v-list-item-title>
+         
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -24,10 +25,10 @@ export default {
   data() {
     return {
       items: [
-        { icon: "mdi-home" , path: '/home'},
-        { icon: "mdi-book-open", path: '/rank' },
-        { icon: "mdi-account", path: '/user/1' },
-        { icon: "mdi-cog", path: '/' },
+        { icon: "mdi-home" ,title:"Home", path: '/home'},
+        { icon: "mdi-book-open",title: "Rank", path: '/rank' },
+        { icon: "mdi-account",title:"User", path: '/user/1' },
+        { icon: "mdi-cog",title:"Setting", path: '/' },
       ],
     };
   },
@@ -40,10 +41,7 @@ export default {
 .cardCSS {
   border-radius: 20px !important;
 }
-.listIconCSS {
-  margin: auto;
-  text-align: center;
-}
+
 .listCSS {
   margin-bottom: 60px !important;
   margin-left: 20px;
